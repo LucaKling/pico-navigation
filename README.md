@@ -4,43 +4,34 @@ This is a Plugin for the Flat File Based CMS named [Pico](pico.dev7studios.com/)
 
 ## use
 
-Copy the `at_navigation.php` File to the `plugins` Folder in the Root of your Pico Project. Every Plugin in this Folder is activated automatically.
+Copy the `lmk_navigation.php` File to the `plugins` Folder in the Root of your Pico Project. Every Plugin in this Folder is activated automatically.
 
 In your **theme** you only have to add this line where your navigation should be:
 
-    {{ at_navigation.navigation }}
-
-I redesigned the style of the **default theme** for a quick preview. The output is like this:
-
-![Default Theme with at_navigation Plugin](img.png)
-
-just replace the `default` Theme Folder with the one in this repo and add this line to your config.php
-
-    $config['at_navigation']['class'] = 'nav';
-
+    {{ lmk_navigation.navigation }}
 
 ### set id and class of navigation element
 
-Add these two lines to your `config.php` to change **id** and/ or **class** from `at-navigation` to anything you want:
+Add these two lines to your `config.php` to change **id** and/ or **class** from `lmk-navigation` to anything you want:
 
 ```
-$config['at_navigation']['id'] = 'at-navigation';
-$config['at_navigation']['class'] = 'at-navigation';
+$config['lmk_navigation']['id'] = 'lmk-navigation';
+$config['lmk_navigation']['class'] = 'lmk-navigation';
 ```
 
 ### set class of list items and links
 
 ```
-$config['at_navigation']['class_li'] = 'list-item';
-$config['at_navigation']['class_a'] = 'link-item';
+$config['lmk_navigation']['class_li'] = 'list-item';
+$config['lmk_navigation']['class_a'] = 'link-item';
 ```
 
 ### exclude pages and folders
 Add these two lines to your `config.php` to exclude **single pages** and/ or **folders**:
 
 ```
-$config['at_navigation']['exclude']['single'] = array('a/site', 'another/site');
-$config['at_navigation']['exclude']['folder'] = array('a/folder', 'another/folder');
+$config['lmk_navigation']['exclude']['single'] = array('a/site', 'another/site');
+$config['lmk_navigation']['exclude']['folder'] = array('a/folder', 'another/folder');
 ```
 
 ## what it does
@@ -49,7 +40,7 @@ This Plugin generates a better navigation with child navigations and editable co
 
 So the output looks like:
 
-    <ul id="at-navigation" class="at-navigation">
+    <ul id="lmk-navigation" class="lmk-navigation">
         <li><a href="…" title="…">…</a></li>
         <li>
             <a href="…" title="…">…</a>

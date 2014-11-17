@@ -3,11 +3,11 @@
 /**
  * navigation plugin which generates a better configurable navigation with endless children navigations
  *
- * @author Ahmet Topal
- * @link http://ahmet-topal.com
+ * @author Luca Kling <hallo@lucakling.de>
+ * @former_author Ahmet Topal <http://ahmet-topal.com>
  * @license http://opensource.org/licenses/MIT
  */
-class AT_Navigation {	
+class lmk_Navigation {	
 	##
 	# VARS
 	##
@@ -18,16 +18,15 @@ class AT_Navigation {
 	# HOOKS
 	##
 	
-	public function get_pages(&$pages, &$current_page, &$prev_page, &$next_page)
-	{
+	public function get_pages(&$pages, &$current_page, &$prev_page, &$next_page) {
 		$navigation = array();
 		
 		foreach ($pages as $page)
 		{
-			if (!$this->at_exclude($page))
+			if (!$this->lmk_exclude($page))
 			{
 				$_split = explode('/', substr($page['url'], strlen($this->settings['base_url'])+1));
-				$navigation = array_merge_recursive($navigation, $this->at_recursive($_split, $page, $current_page));
+				$navigation = array_merge_recursive($navigation, $this->lmk_recursive($_split, $page, $current_page));
 			}
 		}
 		
@@ -35,40 +34,37 @@ class AT_Navigation {
 		$this->navigation = $navigation;
 	}
 	
-	public function config_loaded(&$settings)
-	{
+	public function config_loaded(&$settings) {
 		$this->settings = $settings;
 		
 		// default id
-		if (!isset($this->settings['at_navigation']['id'])) { $this->settings['at_navigation']['id'] = 'at-navigation'; }
+		if (!isset($this->settings['lmk_navigation']['id'])) { $this->settings['lmk_navigation']['id'] = 'lmk-navigation'; }
 		
 		// default classes
-		if (!isset($this->settings['at_navigation']['class'])) { $this->settings['at_navigation']['class'] = 'at-navigation'; }
-		if (!isset($this->settings['at_navigation']['class_li'])) { $this->settings['at_navigation']['class_li'] = 'li-item'; }
-		if (!isset($this->settings['at_navigation']['class_a'])) { $this->settings['at_navigation']['class_a'] = 'a-item'; }
+		if (!isset($this->settings['lmk_navigation']['class'])) { $this->settings['lmk_navigation']['class'] = 'lmk-navigation'; }
+		if (!isset($this->settings['lmk_navigation']['class_li'])) { $this->settings['lmk_navigation']['class_li'] = 'li-item'; }
+		if (!isset($this->settings['lmk_navigation']['class_a'])) { $this->settings['lmk_navigation']['class_a'] = 'a-item'; }
 		
 		// default excludes
-		$this->settings['at_navigation']['exclude'] = array_merge_recursive(
+		$this->settings['lmk_navigation']['exclude'] = array_merge_recursive(
 			array('single' => array(), 'folder' => array()),
-			isset($this->settings['at_navigation']['exclude']) ? $this->settings['at_navigation']['exclude'] : array()
+			isset($this->settings['lmk_navigation']['exclude']) ? $this->settings['lmk_navigation']['exclude'] : array()
 		);
 	}
 	
-	public function before_render(&$twig_vars, &$twig)
-	{
-		$twig_vars['at_navigation']['navigation'] = $this->at_build_navigation($this->navigation, true);
+	public function before_render(&$twig_vars, &$twig) {
+		$twig_vars['lmk_navigation']['navigation'] = $this->lmk_build_navigation($this->navigation, true);
 	}
 
 	##
 	# HELPER
 	##
 	
-	private function at_build_navigation($navigation = array(), $start = false)
-	{
-		$id = $start ? $this->settings['at_navigation']['id'] : '';
-		$class = $start ? $this->settings['at_navigation']['class'] : '';
-		$class_li = $this->settings['at_navigation']['class_li'];
-		$class_a = $this->settings['at_navigation']['class_a'];
+	private function lmk_build_navigation($navigation = array(), $start = false) {
+		$id = $start ? $this->settings['lmk_navigation']['id'] : '';
+		$class = $start ? $this->settings['lmk_navigation']['class'] : '';
+		$class_li = $this->settings['lmk_navigation']['class_li'];
+		$class_a = $this->settings['lmk_navigation']['class_a'];
 		$child = '';
 		$ul = $start ? '<ul id="%s" class="%s">%s</ul>' : '<ul>%s</ul>';
 		
@@ -79,7 +75,7 @@ class AT_Navigation {
 			
 			foreach ($_child as $c)
 			{
-				$child .= $this->at_build_navigation($c);
+				$child .= $this->lmk_build_navigation($c);
 			}
 			
 			$child = $start ? sprintf($ul, $id, $class, $child) : sprintf($ul, $child);
@@ -100,9 +96,8 @@ class AT_Navigation {
 		return $li;
 	}
 	
-	private function at_exclude($page)
-	{
-		$exclude = $this->settings['at_navigation']['exclude'];
+	private function lmk_exclude($page) {
+		$exclude = $this->settings['lmk_navigation']['exclude'];
 		$url = substr($page['url'], strlen($this->settings['base_url'])+1);
 		$url = (substr($url, -1) == '/') ? $url : $url.'/';
 		
@@ -131,9 +126,8 @@ class AT_Navigation {
 		return false;
 	}
 	
-	private function at_recursive($split = array(), $page = array(), $current_page = array())
-	{
-		$activeClass = (isset($this->settings['at_navigation']['activeClass'])) ? $this->settings['at_navigation']['activeClass'] : 'is-active';
+	private function lmk_recursive($split = array(), $page = array(), $current_page = array()) {
+		$activeClass = (isset($this->settings['lmk_navigation']['activeClass'])) ? $this->settings['lmk_navigation']['activeClass'] : 'active';
 		if (count($split) == 1)
 		{			
 			$is_index = ($split[0] == '') ? true : false;
@@ -152,11 +146,11 @@ class AT_Navigation {
 			if ($split[1] == '')
 			{
 				array_pop($split);
-				return $this->at_recursive($split, $page, $current_page);
+				return $this->lmk_recursive($split, $page, $current_page);
 			}
 			
 			$first = array_shift($split);
-			return array('_child' => array($first => $this->at_recursive($split, $page, $current_page)));
+			return array('_child' => array($first => $this->lmk_recursive($split, $page, $current_page)));
 		}
 	}
 }
