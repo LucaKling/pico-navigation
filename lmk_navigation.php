@@ -88,7 +88,7 @@ class lmk_Navigation {
 		$class_li = $this->settings['lmk_navigation']['class_li'];
 		$class_a = $this->settings['lmk_navigation']['class_a'];
 		$child = '';
-		$ul = $start ? '<ul id="%s" class="%s">%s</ul>' . $this->EOL : '<ul class="chil">%s</ul>' . $this->EOL;
+		$ul = $start ? '<ul id="%s" class="%s">%s</ul>' . $this->EOL : '<ul>%s</ul>' . $this->EOL;
 		
 		if (isset($navigation['_child']))
 		{
