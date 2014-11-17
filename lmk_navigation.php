@@ -33,8 +33,7 @@ class lmk_Navigation {
 		
 		array_multisort($navigation);
 		$this->navigation = $navigation;
-		$this->EOL = "
-";
+		$this->EOL = "\r\n";
 	}
 	
 	public function config_loaded(&$settings) {
@@ -89,7 +88,7 @@ class lmk_Navigation {
 		$class_li = $this->settings['lmk_navigation']['class_li'];
 		$class_a = $this->settings['lmk_navigation']['class_a'];
 		$child = '';
-		$ul = $start ? '<ul id="%s" class="%s">%s</ul>' . $this->EOL : '<ul>%s</ul>' . $this->EOL;
+		$ul = $start ? '<ul id="%s" class="%s">' . $this->EOL . '%s</ul>' . $this->EOL : '<ul>%s</ul>' . $this->EOL;
 		
 		if (isset($navigation['_child']))
 		{
