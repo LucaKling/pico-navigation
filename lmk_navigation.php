@@ -104,7 +104,7 @@ class lmk_Navigation {
 		
 		$li = isset($navigation['title'])
 			? sprintf(
-				'<li class="%1$s %5$s"><a href="%2$s" class="%1$s %6$s" title="%3$s">%3$s</a>%4$s</li>',
+				'<li class="%1$s %5$s"><a href="%2$s" class="%1$s %6$s" title="%3$s">%3$s</a>%4$s</li>' . $this->EOL,
 				$navigation['class'],
 				$navigation['url'],
 				$navigation['title'],
