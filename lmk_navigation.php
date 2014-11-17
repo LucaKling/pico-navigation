@@ -13,6 +13,7 @@ class lmk_Navigation {
 	##
 	private $settings = array();
 	private $navigation = array();
+	private $EOL;
 	
 	##
 	# HOOKS
@@ -32,18 +33,38 @@ class lmk_Navigation {
 		
 		array_multisort($navigation);
 		$this->navigation = $navigation;
+		$this->EOL = "\r\n";
 	}
 	
 	public function config_loaded(&$settings) {
 		$this->settings = $settings;
 		
-		// default id
-		if (!isset($this->settings['lmk_navigation']['id'])) { $this->settings['lmk_navigation']['id'] = 'lmk-navigation'; }
-		
-		// default classes
-		if (!isset($this->settings['lmk_navigation']['class'])) { $this->settings['lmk_navigation']['class'] = 'lmk-navigation'; }
-		if (!isset($this->settings['lmk_navigation']['class_li'])) { $this->settings['lmk_navigation']['class_li'] = 'li-item'; }
-		if (!isset($this->settings['lmk_navigation']['class_a'])) { $this->settings['lmk_navigation']['class_a'] = 'a-item'; }
+		if(!isset($this->settings['lmk_navigation']['bootsrap']))
+			$this->settings['lmk_navigation']['bootsrap'] = false;
+		else
+			if($this->settings['lmk_navigation']['bootsrap'] == true) { // Bootstrap additions
+				if(!isset($this->settings['lmk_navigation']['activeclass']))
+					$this->settings['lmk_navigation']['activeclass'] = 'active';
+				if(!isset($this->settings['lmk_navigation']['id']))
+					$this->settings['lmk_navigation']['id'] = '';
+				if(!isset($this->settings['lmk_navigation']['class']))
+					$this->settings['lmk_navigation']['class'] = 'nav navbar-nav';
+				if(!isset($this->settings['lmk_navigation']['class_li']))
+					$this->settings['lmk_navigation']['class_li'] = '';
+				if(!isset($this->settings['lmk_navigation']['class_a']))
+					$this->settings['lmk_navigation']['class_a'] = '';
+			} else { // No Bootstrap additions
+				if(!isset($this->settings['lmk_navigation']['activeclass']))
+					$this->settings['lmk_navigation']['activeclass'] = 'is-active';
+				if(!isset($this->settings['lmk_navigation']['id']))
+					$this->settings['lmk_navigation']['id'] = 'lmk-navigation';
+				if(!isset($this->settings['lmk_navigation']['class']))
+					$this->settings['lmk_navigation']['class'] = 'lmk-navigation';
+				if(!isset($this->settings['lmk_navigation']['class_li']))
+					$this->settings['lmk_navigation']['class_li'] = 'li-item';
+				if(!isset($this->settings['lmk_navigation']['class_a']))
+					$this->settings['lmk_navigation']['class_a'] = 'a-item';
+			}
 		
 		// default excludes
 		$this->settings['lmk_navigation']['exclude'] = array_merge_recursive(
@@ -66,7 +87,7 @@ class lmk_Navigation {
 		$class_li = $this->settings['lmk_navigation']['class_li'];
 		$class_a = $this->settings['lmk_navigation']['class_a'];
 		$child = '';
-		$ul = $start ? '<ul id="%s" class="%s">%s</ul>' : '<ul>%s</ul>';
+		$ul = $start ? '<ul id="%s" class="%s">%s</ul>' . $this->EOL : '<ul>%s</ul>' . $this->EOL;
 		
 		if (isset($navigation['_child']))
 		{
@@ -127,14 +148,13 @@ class lmk_Navigation {
 	}
 	
 	private function lmk_recursive($split = array(), $page = array(), $current_page = array()) {
-		$activeClass = (isset($this->settings['lmk_navigation']['activeClass'])) ? $this->settings['lmk_navigation']['activeClass'] : 'active';
 		if (count($split) == 1)
 		{			
 			$is_index = ($split[0] == '') ? true : false;
 			$ret = array(
 				'title'			=> $page['title'],
 				'url'			=> $page['url'],
-				'class'			=> ($page['url'] == $current_page['url']) ? $activeClass : ''
+				'class'			=> ($page['url'] == $current_page['url']) ? $this->settings['lmk_navigation']['activeclass'] : ''
 			);
 			
 			$split0 = ($split[0] == '') ? '_index' : $split[0];
