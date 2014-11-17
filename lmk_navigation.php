@@ -33,7 +33,8 @@ class lmk_Navigation {
 		
 		array_multisort($navigation);
 		$this->navigation = $navigation;
-		$this->EOL = "\r\n";
+		$this->EOL = "
+";
 	}
 	
 	public function config_loaded(&$settings) {
