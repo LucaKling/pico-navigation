@@ -98,7 +98,7 @@ class lmk_Navigation {
 		$class_child_ul = $this->settings['lmk_navigation']['class_child_ul'];
 		$add_child_ul = $this->settings['lmk_navigation']['add_child_ul'];
 		$child = '';
-		$ul = $start ? '<ul id="%1$s" class="%2$s">' . $this->EOL . '%3$s</ul>' . $this->EOL : '<ul class="%4$s" %5$s>%1$s</ul>' . $this->EOL;
+		$ul = $start ? '<ul id="%1$s" class="%2$s">' . $this->EOL . '%3$s</ul>' . $this->EOL : '<ul class="%2$s" %3$s>%1$s</ul>' . $this->EOL;
 		
 		if (isset($navigation['_child']))
 		{
@@ -110,7 +110,7 @@ class lmk_Navigation {
 				$child .= $this->lmk_build_navigation($c);
 			}
 			
-			$child = $start ? sprintf($ul, $id, $class, $child, $class_child_ul, $add_child_ul) : sprintf($ul, $child);
+			$child = $start ? sprintf($ul, $id, $class, $child) : sprintf($ul, $child, $class_child_ul, $add_child_ul);
 		}
 		
 		$li = isset($navigation['title'])
