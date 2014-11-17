@@ -98,7 +98,7 @@ class lmk_Navigation {
 		$class_child_ul = $this->settings['lmk_navigation']['class_child_ul'];
 		$add_child_ul = $this->settings['lmk_navigation']['add_child_ul'];
 		$child = '';
-		$ul = $start ? '<ul id="%1$s" class="%2$s">' . $this->EOL . '%3$s</ul>' . $this->EOL : '<ul class="%7$s" %8$s>%1$s</ul>' . $this->EOL;
+		$ul = $start ? '<ul id="%1$s" class="%2$s">' . $this->EOL . '%3$s</ul>' . $this->EOL : '<ul>%1$s</ul>' . $this->EOL;
 		
 		if (isset($navigation['_child']))
 		{
