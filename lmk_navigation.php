@@ -39,10 +39,10 @@ class lmk_Navigation {
 	public function config_loaded(&$settings) {
 		$this->settings = $settings;
 		
-		if(!isset($this->settings['lmk_navigation']['bootsrap']))
-			$this->settings['lmk_navigation']['bootsrap'] = false;
-		else
-			if($this->settings['lmk_navigation']['bootsrap'] == true) { // Bootstrap additions
+		if(!isset($this->settings['lmk_navigation']['bootstrap']))
+			$this->settings['lmk_navigation']['bootstrap'] = false;
+		else {
+			if($this->settings['lmk_navigation']['bootstrap'] == true) { // Bootstrap additions
 				if(!isset($this->settings['lmk_navigation']['activeclass']))
 					$this->settings['lmk_navigation']['activeclass'] = 'active';
 				if(!isset($this->settings['lmk_navigation']['id']))
@@ -65,6 +65,7 @@ class lmk_Navigation {
 				if(!isset($this->settings['lmk_navigation']['class_a']))
 					$this->settings['lmk_navigation']['class_a'] = 'a-item';
 			}
+		}
 		
 		// default excludes
 		$this->settings['lmk_navigation']['exclude'] = array_merge_recursive(
