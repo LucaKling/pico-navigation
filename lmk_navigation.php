@@ -53,6 +53,10 @@ class lmk_Navigation {
 					$this->settings['lmk_navigation']['class_li'] = '';
 				if(!isset($this->settings['lmk_navigation']['class_a']))
 					$this->settings['lmk_navigation']['class_a'] = '';
+				if(!isset($this->settings['lmk_navigation']['class_child_ul']))
+					$this->settings['lmk_navigation']['class_child_ul'] = 'dropdown-menu';
+				if(!isset($this->settings['lmk_navigation']['add_child_ul']))
+					$this->settings['lmk_navigation']['add_child_ul'] = 'role="menu"';
 			} else { // No Bootstrap additions
 				if(!isset($this->settings['lmk_navigation']['activeclass']))
 					$this->settings['lmk_navigation']['activeclass'] = 'is-active';
@@ -64,6 +68,10 @@ class lmk_Navigation {
 					$this->settings['lmk_navigation']['class_li'] = 'li-item';
 				if(!isset($this->settings['lmk_navigation']['class_a']))
 					$this->settings['lmk_navigation']['class_a'] = 'a-item';
+				if(!isset($this->settings['lmk_navigation']['class_child_ul']))
+					$this->settings['lmk_navigation']['class_child_ul'] = '';
+				if(!isset($this->settings['lmk_navigation']['add_child_ul']))
+					$this->settings['lmk_navigation']['add_child_ul'] = '';
 			}
 		}
 		
@@ -87,8 +95,10 @@ class lmk_Navigation {
 		$class = $start ? $this->settings['lmk_navigation']['class'] : '';
 		$class_li = $this->settings['lmk_navigation']['class_li'];
 		$class_a = $this->settings['lmk_navigation']['class_a'];
+		$class_child_ul = $this->settings['lmk_navigation']['class_child_ul'];
+		$add_child_ul = $this->settings['lmk_navigation']['add_child_ul'];
 		$child = '';
-		$ul = $start ? '<ul id="%s" class="%s">' . $this->EOL . '%s</ul>' . $this->EOL : '<ul>%s</ul>' . $this->EOL;
+		$ul = $start ? '<ul id="%1$s" class="%2$s">' . $this->EOL . '%3$s</ul>' . $this->EOL : '<ul class="%7$s" %8$s>%1$s</ul>' . $this->EOL;
 		
 		if (isset($navigation['_child']))
 		{
@@ -111,7 +121,9 @@ class lmk_Navigation {
 				$navigation['title'],
 				$child,
 				$class_li,
-				$class_a
+				$class_a,
+				$class_child_ul,
+				$add_child_ul
 			)
 			: $child;
 		
